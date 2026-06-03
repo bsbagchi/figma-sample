@@ -5,11 +5,14 @@ const PROFILE_IMAGE = "/profiles/ellipse-261.png";
 /** Figma artboard */
 const ARTBOARD = 1440;
 const AVATAR_SIZE = 226;
-/** First avatar top-left on artboard */
 const FIGMA_LEFT_MIN = 199;
 const FIGMA_LEFT_MAX = ARTBOARD - FIGMA_LEFT_MIN - AVATAR_SIZE;
 
-/** Wave layout — x/y tuned for overlap; mapped to Figma px on xl */
+/** Description ends at top 560 + 72px line box = 632 in hero coords (xl) */
+export const HERO_DESC_BOTTOM = 632;
+/** ~40px gap below description to first avatar row */
+export const PROFILE_CLUSTER_TOP = HERO_DESC_BOTTOM + 40;
+
 const AVATARS = [
   { id: 1, x: -10, y: 0, z: 1 },
   { id: 2, x: 0, y: 38, z: 2 },
@@ -26,13 +29,15 @@ function figmaLeft(x: number) {
   return FIGMA_LEFT_MIN + t * (FIGMA_LEFT_MAX - FIGMA_LEFT_MIN);
 }
 
-/** Vertical wave offset from first avatar baseline (y: 58) */
-function topOffset(y: number) {
+/** Wave offset — baseline y:58 is the first avatar row */
+function waveTop(y: number) {
   return (y - 58) * 2;
 }
 
-const CLUSTER_PAD_TOP = 104;
-const CLUSTER_HEIGHT = CLUSTER_PAD_TOP + AVATAR_SIZE + 8;
+const AVATAR_TOPS = AVATARS.map((a) => waveTop(a.y));
+const MIN_WAVE_TOP = Math.min(...AVATAR_TOPS);
+const MAX_WAVE_TOP = Math.max(...AVATAR_TOPS);
+const CLUSTER_HEIGHT = MAX_WAVE_TOP - MIN_WAVE_TOP + AVATAR_SIZE;
 
 type ProfileClusterProps = {
   className?: string;
@@ -56,7 +61,7 @@ export function ProfileCluster({ className = "" }: ProfileClusterProps) {
             className="absolute shrink-0"
             style={{
               left: `${(figmaLeft(avatar.x) / ARTBOARD) * 100}%`,
-              top: `calc(${CLUSTER_PAD_TOP + topOffset(avatar.y)} / ${AVATAR_SIZE} * var(--avatar-size))`,
+              top: `calc(${(waveTop(avatar.y) - MIN_WAVE_TOP) / AVATAR_SIZE} * var(--avatar-size))`,
               zIndex: avatar.z,
             }}
           >
@@ -74,3 +79,5 @@ export function ProfileCluster({ className = "" }: ProfileClusterProps) {
     </div>
   );
 }
+
+export const PROFILE_CLUSTER_HEIGHT = CLUSTER_HEIGHT;
