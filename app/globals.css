@@ -10,6 +10,7 @@
   --color-vector-black: #0e0e0e;
   --color-vector-peach: #f0a89a;
   --color-text-muted: #1a1a1a;
+  --color-footer-mint: #c5ead4;
 
   --font-hero: "New Gerbil", "Gerbil", ui-sans-serif, system-ui, sans-serif;
   --font-description: "Satoshi", ui-sans-serif, system-ui, sans-serif;
@@ -23,12 +24,13 @@
 
 html {
   scroll-behavior: smooth;
+  overflow-x: hidden;
 }
 
 body {
   margin: 0;
   min-height: 100%;
-  overflow-x: visible;
+  overflow-x: hidden;
   background: #ffffff;
   color: #000000;
   font-family: ui-sans-serif, system-ui, sans-serif;

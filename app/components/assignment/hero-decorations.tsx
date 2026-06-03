@@ -2,13 +2,13 @@ import { Vector2511 } from "./vector-2511";
 
 function LeftVectors() {
   return (
-    <div className="absolute top-28 left-0 z-[1] h-[236px] w-14 md:top-[400px] md:h-[304px] md:w-[72px]  lg:top-[514.5px] 2xl:-left-40 lg:h-[355px] lg:w-[84px]">
-      <Vector2511
-        stroke="#f0a89a"
-        className="absolute top-0 left-0 h-full w-full translate-x-3 translate-y-[18px]"
-      />
+    <div className="absolute top-28 left-0 z-[1] hidden h-[236px] w-14 md:top-[400px] md:h-[304px] md:w-[72px]  lg:top-[514.5px] 2xl:-left-40 lg:h-[355px] lg:w-[84px]">
       <Vector2511
         stroke="#0e0e0e"
+        className="absolute top-0 left-0 h-full w-full translate-x-10 translate-y-0"
+      />
+      <Vector2511
+        stroke="#FF7171"
         className="absolute top-0 left-0 h-full w-full"
       />
     </div>

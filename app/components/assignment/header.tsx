@@ -22,7 +22,7 @@ export function Header() {
         <div className="flex h-full w-full items-center justify-between px-5 md:px-8 lg:px-12">
           <a
             href="#home"
-            className="shrink-0 text-lg font-semibold text-black no-underline md:text-xl"
+            className="shrink-0 font-hero text-xl font-normal text-black no-underline md:text-2xl"
           >
             Elementum
           </a>
