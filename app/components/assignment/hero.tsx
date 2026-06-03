@@ -51,7 +51,7 @@ export function Hero() {
   return (
     <section
       id="home"
-      className="relative flex w-full flex-col items-stretch gap-6 overflow-visible py-12 md:gap-8 md:py-16 lg:gap-10 xl:absolute xl:inset-x-0 xl:top-[88px] xl:min-h-[906px] xl:gap-0 xl:py-0"
+      className="relative flex w-full flex-col items-stretch gap-6 overflow-visible py-12 md:gap-8 md:py-16 lg:gap-10 xl:absolute xl:inset-x-0 xl:top-[88px] xl:min-h-[1134px] xl:gap-0 xl:py-0"
     >
       <div className="relative z-10 flex w-full flex-col items-center gap-8 px-5 md:gap-10 md:px-8 lg:gap-12 xl:contents">
         <h1 className="m-0 w-full max-w-[831px] shrink-0 text-center font-hero text-4xl leading-[44px] font-normal tracking-normal text-black md:text-7xl md:leading-[91px] xl:text-[100px] xl:leading-[126px] xl:absolute xl:top-[130px] xl:left-1/2 xl:max-w-none xl:-translate-x-1/2">
