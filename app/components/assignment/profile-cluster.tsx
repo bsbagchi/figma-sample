@@ -1,6 +1,6 @@
 import Image from "next/image";
 
-/** Figma artboard */
+/** Figma artboard — layout scales uniformly from this reference */
 const ARTBOARD = 1440;
 const AVATAR_SIZE = 226;
 const FIGMA_LEFT_MIN = 199;
@@ -36,13 +36,28 @@ const MIN_WAVE_TOP = Math.min(...AVATARS.map((a) => waveTop(a.y)));
 const MAX_WAVE_TOP = Math.max(...AVATARS.map((a) => waveTop(a.y)));
 const CLUSTER_HEIGHT = MAX_WAVE_TOP - MIN_WAVE_TOP + AVATAR_SIZE;
 
-function waveTopPercent(y: number) {
+function leftPercent(x: number) {
+  return (figmaLeft(x) / ARTBOARD) * 100;
+}
+
+function topPercent(y: number) {
   return ((waveTop(y) - MIN_WAVE_TOP) / CLUSTER_HEIGHT) * 100;
 }
 
-/** 226px at xl — scales down with clamp(3.5rem, 15.694vw, 14.125rem) */
-const AVATAR_CLASS =
-  "size-14 min-w-14 min-h-14 md:size-[min(15.694vw,14.125rem)] md:min-w-[min(15.694vw,14.125rem)] md:min-h-[min(15.694vw,14.125rem)] xl:size-[226px] xl:min-w-[226px] xl:min-h-[226px]";
+/** 226 / 1440 — avatar diameter as % of cluster width */
+const AVATAR_WIDTH_PERCENT = (AVATAR_SIZE / ARTBOARD) * 100;
+
+/** Auto-fit on mobile/tablet only — keeps edge avatars on screen */
+const AVATAR_BOUNDS = AVATARS.map((a) => ({
+  left: leftPercent(a.x),
+  right: leftPercent(a.x) + AVATAR_WIDTH_PERCENT,
+}));
+const MIN_LEFT = Math.min(...AVATAR_BOUNDS.map((b) => b.left));
+const MAX_RIGHT = Math.max(...AVATAR_BOUNDS.map((b) => b.right));
+const LAYOUT_SPAN = MAX_RIGHT - MIN_LEFT;
+const CONTENT_CENTER = (MIN_LEFT + MAX_RIGHT) / 2;
+const FIT_SCALE = 100 / LAYOUT_SPAN;
+const VISUAL_CLUSTER_HEIGHT = CLUSTER_HEIGHT * FIT_SCALE;
 
 type ProfileClusterProps = {
   className?: string;
@@ -51,30 +66,49 @@ type ProfileClusterProps = {
 export function ProfileCluster({ className = "" }: ProfileClusterProps) {
   return (
     <div
-      className={`relative w-full max-w-none overflow-visible ${className}`}
+      className={`relative w-full overflow-visible ${className}`}
       aria-label="Team profiles"
     >
-      <div className="relative h-[114px] w-full overflow-visible md:h-[min(32.06vw,462px)] xl:h-[462px]">
-        {AVATARS.map((avatar) => (
-          <div
-            key={avatar.id}
-            className="absolute shrink-0"
-            style={{
-              left: `${(figmaLeft(avatar.x) / ARTBOARD) * 100}%`,
-              top: `${waveTopPercent(avatar.y)}%`,
-              zIndex: avatar.z,
-            }}
-          >
-            <Image
-              src={avatar.src}
-              alt=""
-              width={AVATAR_SIZE}
-              height={AVATAR_SIZE}
-              sizes="(max-width: 640px) 56px, (max-width: 1280px) 15.694vw, 226px"
-              className={`${AVATAR_CLASS} shrink-0 rounded-full  bg-white object-cover shadow-[0_4px_16px_rgba(0,0,0,0.1)]`}
-            />
-          </div>
-        ))}
+      {/*
+        Desktop (xl+): full 1440 layout, edge-to-edge — no shrink (was causing fake padding).
+        Mobile/tablet: auto-fit scale so avatars stay on screen.
+      */}
+      <div
+        className="relative w-full overflow-visible max-xl:h-[min(calc(462/1440*100vw*var(--fit-scale)),var(--fit-height))] xl:aspect-[1440/462]"
+        style={
+          {
+            "--fit-scale": FIT_SCALE,
+            "--fit-height": `${VISUAL_CLUSTER_HEIGHT}px`,
+            "--origin-x": `${CONTENT_CENTER}%`,
+          } as React.CSSProperties
+        }
+      >
+        <div
+          className="absolute top-0 left-0 aspect-[1440/462] w-full origin-top max-xl:scale-[var(--fit-scale)] xl:scale-100"
+          style={{ transformOrigin: "var(--origin-x) top" }}
+        >
+          {AVATARS.map((avatar) => (
+            <div
+              key={avatar.id}
+              className="absolute aspect-square shrink-0"
+              style={{
+                left: `${leftPercent(avatar.x)}%`,
+                top: `${topPercent(avatar.y)}%`,
+                width: `${AVATAR_WIDTH_PERCENT}%`,
+                zIndex: avatar.z,
+              }}
+            >
+              <Image
+                src={avatar.src}
+                alt=""
+                width={AVATAR_SIZE}
+                height={AVATAR_SIZE}
+                sizes="(max-width: 1280px) 12vw, 226px"
+                className="size-full shrink-0 rounded-full border-[clamp(2px,0.556vw,8px)] border-white bg-white object-cover shadow-[0_4px_16px_rgba(0,0,0,0.1)]"
+              />
+            </div>
+          ))}
+        </div>
       </div>
     </div>
   );
