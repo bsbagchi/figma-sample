@@ -52,7 +52,7 @@ export function ServicesSection() {
                 index < SERVICES.length - 1 ? "border-b" : ""
               }`}
             >
-              <p className="m-0 font-description text-sm leading-5 font-normal text-black/50 md:text-base md:leading-6">
+              <p className="m-0 font-description text-sm leading-5 font-normal  md:text-base md:leading-6">
                 {service.label}
               </p>
 

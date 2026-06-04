@@ -10,7 +10,10 @@
   --color-vector-black: #0e0e0e;
   --color-vector-peach: #f0a89a;
   --color-text-muted: #1a1a1a;
-  --color-footer-mint: #c5ead4;
+  --color-footer-mint: #d7eedd;
+  --color-testimonial-surface: #d7eedd4d;
+  --color-testimonial-border: #8bcea3;
+  --color-testimonial-quote: #c4c4c4;
 
   --font-hero: "New Gerbil", "Gerbil", ui-sans-serif, system-ui, sans-serif;
   --font-description: "Satoshi", ui-sans-serif, system-ui, sans-serif;

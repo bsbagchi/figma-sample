@@ -104,7 +104,7 @@ export function ProfileCluster({ className = "" }: ProfileClusterProps) {
                 width={AVATAR_SIZE}
                 height={AVATAR_SIZE}
                 sizes="(max-width: 1280px) 12vw, 226px"
-                className="size-full shrink-0 rounded-full border-[clamp(2px,0.556vw,8px)] border-white bg-white object-cover shadow-[0_4px_16px_rgba(0,0,0,0.1)]"
+                className="size-full shrink-0 rounded-full  object-cover shadow-[0_4px_16px_rgba(0,0,0,0.1)]"
               />
             </div>
           ))}
