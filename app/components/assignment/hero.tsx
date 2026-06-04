@@ -15,7 +15,7 @@ export function Hero() {
         <h1 className="m-0 w-full max-w-[831px] shrink-0 text-center font-hero text-4xl leading-[44px] font-normal tracking-normal text-black md:text-7xl md:leading-[91px] xl:text-[100px] xl:leading-[126px] xl:absolute xl:top-[130px] xl:left-1/2 xl:max-w-none xl:-translate-x-1/2">
           The <UnderlineAccent>thinkers</UnderlineAccent> and
           <br />
-          doers were <div className="inline-block">ch<HighlightPink>anging</HighlightPink></div>
+          doers were <span className="inline-block">ch<HighlightPink>anging</HighlightPink></span>
           <br />
           the <HighlightGreen>status</HighlightGreen> Quo{" "}
           with

@@ -5,7 +5,7 @@ export const CURVELINE_WIDTH = 1483;
 export const CURVELINE_HEIGHT = 654;
 
 /** Figma export: public/vectors/curve2.svg — 864×654 (second curve, services) */
-export const CURVE2_WIDTH = 964;
+export const CURVE2_WIDTH = 864;
 export const CURVE2_HEIGHT = 654;
 
 /** Shared layout: pinned to parent right edge, width trimmed from the left. */
@@ -19,6 +19,29 @@ type CurveImageProps = {
   className?: string;
 };
 
+type CurveSvgProps = {
+  src: string;
+  width: number;
+  height: number;
+  sizes: string;
+};
+
+function CurveSvg({ src, width, height, sizes }: CurveSvgProps) {
+  return (
+    <Image
+      src={src}
+      width={width}
+      height={height}
+      alt=""
+      aria-hidden
+      unoptimized
+      sizes={sizes}
+      className="block h-auto w-full"
+      style={{ width: "100%", height: "auto" }}
+    />
+  );
+}
+
 /** First curve — curveline.svg */
 export function Curveline({ className = "" }: CurveImageProps) {
   return (
@@ -26,12 +49,10 @@ export function Curveline({ className = "" }: CurveImageProps) {
       className={`${CURVE_TRIM_CLASSES} max-w-[1483px] ${className}`}
       aria-hidden
     >
-      <Image
+      <CurveSvg
         src="/vectors/curveline.svg"
         width={CURVELINE_WIDTH}
         height={CURVELINE_HEIGHT}
-        alt=""
-        className="block h-auto w-full"
         sizes="(max-width: 1440px) 90vw, 1483px"
       />
     </div>
@@ -45,12 +66,10 @@ export function Curve2({ className = "" }: CurveImageProps) {
       className={`${CURVE_TRIM_CLASSES} max-w-[864px] ${className}`}
       aria-hidden
     >
-      <Image
+      <CurveSvg
         src="/vectors/curve2.svg"
         width={CURVE2_WIDTH}
         height={CURVE2_HEIGHT}
-        alt=""
-        className="block h-auto w-full"
         sizes="(max-width: 1440px) 55vw, 864px"
       />
     </div>

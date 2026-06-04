@@ -70,7 +70,10 @@ function FooterWaveAccent() {
           width={CURVE_ARROW_WIDTH}
           height={CURVE_ARROW_HEIGHT}
           alt=""
+          aria-hidden
+          unoptimized
           className="h-14 w-auto md:h-16 lg:h-[72px]"
+          style={{ width: "auto", height: "auto" }}
         />
       ))}
     </div>
