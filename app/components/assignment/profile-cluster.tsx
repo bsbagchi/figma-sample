@@ -47,7 +47,7 @@ function topPercent(y: number) {
 /** 226 / 1440 — avatar diameter as % of cluster width */
 const AVATAR_WIDTH_PERCENT = (AVATAR_SIZE / ARTBOARD) * 100;
 
-/** Auto-fit on mobile/tablet only — keeps edge avatars on screen */
+/** Bounds of raw Figma layout — used only for uniform scale, not repositioning */
 const AVATAR_BOUNDS = AVATARS.map((a) => ({
   left: leftPercent(a.x),
   right: leftPercent(a.x) + AVATAR_WIDTH_PERCENT,
@@ -70,8 +70,9 @@ export function ProfileCluster({ className = "" }: ProfileClusterProps) {
       aria-label="Team profiles"
     >
       {/*
-        Desktop (xl+): full 1440 layout, edge-to-edge — no shrink (was causing fake padding).
-        Mobile/tablet: auto-fit scale so avatars stay on screen.
+        Raw Figma % positions on a 1440×462 plane (desktop layout).
+        Uniform scale keeps those positions; only xl:scale-100 was removed so
+        edge avatars do not clip off-screen.
       */}
       <div
         className="relative w-full overflow-visible max-xl:h-[min(calc(462/1440*100vw*var(--fit-scale)),var(--fit-height))] xl:aspect-[1440/462]"
@@ -84,7 +85,7 @@ export function ProfileCluster({ className = "" }: ProfileClusterProps) {
         }
       >
         <div
-          className="absolute top-0 left-0 aspect-[1440/462] w-full origin-top max-xl:scale-[var(--fit-scale)] xl:scale-100"
+          className="absolute top-0 left-0 aspect-[1440/462] w-full origin-top  scale-[var(--fit-scale)]"
           style={{ transformOrigin: "var(--origin-x) top" }}
         >
           {AVATARS.map((avatar) => (
@@ -104,7 +105,7 @@ export function ProfileCluster({ className = "" }: ProfileClusterProps) {
                 width={AVATAR_SIZE}
                 height={AVATAR_SIZE}
                 sizes="(max-width: 1280px) 12vw, 226px"
-                className="size-full shrink-0 rounded-full  object-cover shadow-[0_4px_16px_rgba(0,0,0,0.1)]"
+                className="size-full shrink-0 rounded-full object-cover shadow-[0_4px_16px_rgba(0,0,0,0.1)]"
               />
             </div>
           ))}
